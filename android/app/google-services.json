@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "358495490418",
+    "project_id": "fir-andflutter-dcce9",
+    "storage_bucket": "fir-andflutter-dcce9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358495490418:android:8cee89017f3d7827638deb",
+        "android_client_info": {
+          "package_name": "com.example.e_comerce_app_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3P9vRJv-N7mvqVXXZcijKYDblvItrzt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358495490418:android:572c5e6c3582dc2f638deb",
+        "android_client_info": {
+          "package_name": "com.example.firebase_and_flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3P9vRJv-N7mvqVXXZcijKYDblvItrzt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper{
@@ -38,28 +36,9 @@ class CacheHelper{
   return sharedPreferences.setDouble(key, value);
 }
 
-
-
   static Future<bool> removeData({required String key})
   async
   {
    return await sharedPreferences.remove(key);
   }
-
-
-  Future<void> saveProductToPrefs(Map<String, dynamic> product) async {
-    final prefs = await SharedPreferences.getInstance();
-    final productList = prefs.getStringList('productList') ?? [];
-
-    productList.add(json.encode(product));
-    await prefs.setStringList('productList', productList);
-  }
-
-  Future<List> getProductListFromPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    final productList = prefs.getStringList('productList') ?? [];
-
-    return productList.map((productJson) => json.decode(productJson)).toList();
-  }
-
 }

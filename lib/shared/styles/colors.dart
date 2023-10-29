@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import '../../layout/cubit/cubit.dart';
+import 'package:path/path.dart';
 
-
+import '../../modules/cubit/cubit.dart';
 var defaultColor= Colors.blue;
-var fontColor=AppCubit().isDark?Colors.white:Colors.black;
+var fontColor=SocialCubit().isDark?Colors.white:Colors.black;
 

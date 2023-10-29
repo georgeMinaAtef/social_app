@@ -7,110 +7,6 @@ import '../networks/local/cache_helper.dart';
 import '../styles/icon_broken.dart';
 import 'constants.dart';
 
-void navigateTo(context, widget) => Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => widget),
-    );
-
-Widget defaultTextButton({
-  required String text,
-  required Function function,
-}) =>
-    TextButton(
-        onPressed: () {
-          function();
-        },
-        child: Text(text.toUpperCase()));
-
-void navigateAndFinish(
-  context,
-  widget,
-) =>
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => widget,
-      ),
-      (route) => false,
-    );
-
-Widget defaultButton({
-  double width = double.infinity,
-  Color background = Colors.blue,
-  required String text,
-  required Function function,
-  bool isUpperCase = true,
-  double radius = 0,
-}) =>
-    Container(
-      width: width,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: BorderRadius.circular(radius),
-      ),
-      child: MaterialButton(
-        onPressed: () {
-          function();
-        },
-        /*()
-        {
-          function();
-          }*/
-        child: Text(
-          isUpperCase ? text.toUpperCase() : text,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-
-//----------------------------- defaultFormField -------------------------------
-Widget defaultFormField({
-  required TextEditingController controller,
-  required TextInputType type,
-  bool isPassword = false,
-  required String label,
-  IconData? prefixIcon,
-  IconData? suffixIcon,
-  onSubmit,
-  onChange,
-  onTap,
-  required validator,
-  function,
-}) =>
-    TextFormField(
-      controller: controller,
-      keyboardType: type,
-      onFieldSubmitted: onSubmit,
-      onChanged: onChange,
-      onTap: onTap,
-      obscureText: isPassword,
-      validator: validator,
-      decoration: InputDecoration(
-        labelText: label,
-        prefixIcon: Icon(
-          prefixIcon,
-        ),
-        suffixIcon: suffixIcon != null
-            ? IconButton(
-          icon: Icon(
-            suffixIcon,
-          ),
-          onPressed: function,
-        )
-            : null,
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blue, width: 2.0),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blue, width: 2.0),
-        ),
-      ),
-    );
-// --------------------------------- defaultTextFormField -------------------------
-
 
 Widget defaultTextFormField({
   FocusNode? focusNode,
@@ -143,7 +39,6 @@ Widget defaultTextFormField({
       obscureText: isPassword,
       keyboardType: keyboardType,
       autofocus: false,
-
       decoration: InputDecoration(
         prefixIcon: Icon(
           prefix,
@@ -204,7 +99,6 @@ Widget defaultTextFormField({
             color: Colors.black,
           ),
         ),
-        border: const OutlineInputBorder(),
         errorBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(20.0),
@@ -218,6 +112,105 @@ Widget defaultTextFormField({
 
 
 
+void navigateTo(context, widget) => Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => widget),
+    );
+
+Widget defaultTextButton({
+  required String text,
+  required Function function,
+}) =>
+    TextButton(
+        onPressed: () {
+          function();
+        },
+        child: Text(text.toUpperCase()));
+
+void navigateAndFinish(
+  context,
+  widget,
+) =>
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget,
+      ),
+      (route) => false,
+    );
+
+Widget defaultButton({
+  double width = double.infinity,
+  Color background = Colors.blue,
+  required String text,
+  required Function function,
+  bool isUpperCase = true,
+  double radius = 0,
+}) =>
+    Container(
+      width: width,
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(radius),
+      ),
+      child: MaterialButton(
+        onPressed: () {
+          function();
+        },
+        /*()
+        {
+          function();
+          }*/
+        child: Text(
+          isUpperCase ? text.toUpperCase() : text,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+
+//----------------------------- defaultFormField -------------------------------
+
+Widget defaultFormField({
+  required TextEditingController controller,
+  required TextInputType type,
+  bool isPassword = false,
+  required String label,
+  IconData? prefixIcon,
+  IconData? suffixIcon,
+  onSubmit,
+  onChange,
+  onTap,
+  required validator,
+  function,
+}) =>
+    TextFormField(
+      controller: controller,
+      keyboardType: type,
+      onFieldSubmitted: onSubmit,
+      onChanged: onChange,
+      onTap: onTap,
+      obscureText: isPassword,
+      validator: validator,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(
+          prefixIcon,
+        ),
+        suffixIcon: suffixIcon != null
+            ? IconButton(
+                icon: Icon(
+                  suffixIcon,
+                ),
+                onPressed: function,
+              )
+            : null,
+        border: const OutlineInputBorder(),
+      ),
+    );
+
 // --------------------------------- designedFormField -------------------------
 Widget designedFormField
   ({
@@ -225,8 +218,7 @@ Widget designedFormField
   required TextEditingController controller,
   required TextInputType type,
   bool isPassword = false,
-  String? label,
-   String? hint,
+   String? label,
   IconData? prefixIcon,
   IconData? suffixIcon,
   onSubmit,
@@ -253,28 +245,16 @@ Widget designedFormField
         labelStyle: TextStyle(
           color: fontColor ?? Colors.black,
         ),
-        hintText: hint,
         hintStyle: TextStyle(
           color: fontColor ?? Colors.black,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
+        focusedBorder: const UnderlineInputBorder(), /*OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25.0),
           borderSide: const BorderSide(
-            color: Colors.blue,
+            color: Colors.black26,
           ),
-        ),
-        enabledBorder:OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: const BorderSide(
-            color: Colors.orange,
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: const BorderSide(
-            color: Colors.red,
-          ),
-        ),
+        ),*/
+        enabledBorder: const UnderlineInputBorder(),
         labelText: label,
         prefixIcon: Icon(
           prefixIcon,
@@ -289,6 +269,7 @@ Widget designedFormField
           onPressed: function,
         )
             : null,
+        border: const UnderlineInputBorder(),/*const OutlineInputBorder(),*/
       ),
     );
 
@@ -558,12 +539,8 @@ void signOut(context,loginScreen){
   navigateAndFinish(context, loginScreen);
   showToast(text: "Logout", state: ToastStates.SUCCESS);
   CacheHelper.removeData(key: 'uId');
-uId =   null;
+  uId=null;
 }
-
-
-
-
 
 // ------------------ defaultAppBar -------------------------------------------
 AppBar defaultAppBar({

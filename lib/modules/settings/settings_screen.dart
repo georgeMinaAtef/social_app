@@ -5,10 +5,10 @@ import '../../shared/components/components.dart';
 import '../../shared/components/constants.dart';
 import '../../shared/networks/local/cache_helper.dart';
 import '../../shared/styles/icon_broken.dart';
-import '../../layout/cubit/cubit.dart';
-import '../../layout/cubit/states.dart';
+import '../cubit/cubit.dart';
+import '../cubit/states.dart';
 import '../edit_password/edit_password_screen.dart';
-import '../profile/edit_profile_screen.dart';
+import '../edit_profile/edit_profile_screen.dart';
 import '../social_login/social_login_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -17,31 +17,23 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit, AppStates>(
+    return BlocConsumer<SocialCubit, SocialStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit=AppCubit.get(context);
+        var cubit=SocialCubit.get(context);
         var color=cubit.isDark?Colors.white:Colors.black;
         return  Scaffold(
-
+          appBar: AppBar(
+            title: const Text(
+                'Settings'
+            ),
+          ),
           body: SingleChildScrollView(
             child: Column(
-
               children: [
-
-                SizedBox(
-                  width: 300,
-                  height: 300,
-                  child: Image.network(
-                    'https://i.ibb.co/TP1zcPq/2-03.png',
-                    fit:BoxFit.fill,
-                  ),
-                ),
-
-
                 InkWell(
                   onTap: () {
-                    navigateTo(context,  const EditProfileScreen());                  },
+                    navigateTo(context, const EditProfileScreen());                  },
                   child: Container(
                     width: double.infinity,
                     height: 45,
@@ -138,7 +130,7 @@ class SettingsScreen extends StatelessWidget {
                         children:  [
                           ConditionalBuilder(
                               condition: cubit.isDark,
-                              builder: (BuildContext context) => Icon(
+                              builder:(BuildContext context) => Icon(
                                 Icons.light_mode_outlined,
                                 color: cubit.isDark?Colors.white:Colors.black,
                               ),
@@ -149,14 +141,13 @@ class SettingsScreen extends StatelessWidget {
                           ),
 
 
+
                           const SizedBox(
                             width: 5,
                           ),
-
-
                           ConditionalBuilder(
                               condition: cubit.isDark,
-                              builder: (BuildContext context) => Text(
+                              builder:(BuildContext context) => Text(
                                 'Light Mode ',
                                 style: TextStyle(
                                   fontSize: 20,
@@ -173,10 +164,6 @@ class SettingsScreen extends StatelessWidget {
                                 ),
                               ),
                           ),
-
-
-
-
                           const Spacer(),
                           const SizedBox(width: 10,),
                           Icon(IconBroken.Arrow___Right_2,

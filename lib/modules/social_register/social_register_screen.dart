@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/networks/local/cache_helper.dart';
-import '../../layout/layout.dart';
+import '../../layout/social_layout.dart';
 import '../../shared/components/components.dart';
 import '../../shared/styles/icon_broken.dart';
-import '../../layout/cubit/cubit.dart';
+import '../cubit/cubit.dart';
 import 'cubit/cubit.dart';
 import 'cubit/states.dart';
 
@@ -28,8 +28,8 @@ class SocialRegisterScreen extends StatelessWidget {
           if (state is SocialCreateUserSuccessState) {
             CacheHelper.saveData(key: 'uId', value: state.uId).then((value) {
               uId = state.uId;
-              navigateAndFinish(context, const Layout());
-              AppCubit.get(context).getUserData();
+              navigateAndFinish(context, const SocialLayout());
+              SocialCubit.get(context).getUserData();
             });
           }
           if (state is SocialRegisterErrorState) {
@@ -53,7 +53,7 @@ class SocialRegisterScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
-                            color:  AppCubit.get(context).isDark?Colors.white:Colors.black,
+                            color:  SocialCubit.get(context).isDark?Colors.white:Colors.black, 
                           ),
                         ),
                         const SizedBox(height: 5,),
@@ -68,7 +68,7 @@ class SocialRegisterScreen extends StatelessWidget {
                           height: 40,
                         ),
                         designedFormField(
-                          fontColor: AppCubit.get(context).isDark?Colors.white:Colors.black,
+                          fontColor: SocialCubit.get(context).isDark?Colors.white:Colors.black,
 
                           controller: nameController,
                           type: TextInputType.name,
@@ -84,7 +84,7 @@ class SocialRegisterScreen extends StatelessWidget {
                           height: 15,
                         ),
                         designedFormField(
-                          fontColor: AppCubit.get(context).isDark?Colors.white:Colors.black,
+                          fontColor: SocialCubit.get(context).isDark?Colors.white:Colors.black,
                           controller: emailController,
                           type: TextInputType.emailAddress,
                           label: 'Email Address',
@@ -99,7 +99,7 @@ class SocialRegisterScreen extends StatelessWidget {
                           height: 15,
                         ),
                         designedFormField(
-                          fontColor: AppCubit.get(context).isDark?Colors.white:Colors.black,
+                          fontColor: SocialCubit.get(context).isDark?Colors.white:Colors.black,
                           function: () {
                             SocialRegisterCubit.get(context)
                                 .changePasswordVisibility();
@@ -121,7 +121,7 @@ class SocialRegisterScreen extends StatelessWidget {
                           height: 15,
                         ),
                         designedFormField(
-                          fontColor: AppCubit.get(context).isDark?Colors.white:Colors.black,
+                          fontColor: SocialCubit.get(context).isDark?Colors.white:Colors.black,
                           controller: phoneController,
                           type: TextInputType.phone,
                           label: 'Phone',
@@ -137,7 +137,7 @@ class SocialRegisterScreen extends StatelessWidget {
                         ),
                         ConditionalBuilder(
                             condition:  state is! SocialRegisterLoadingState,
-                            builder:(BuildContext context) =>
+                            builder: (BuildContext context) =>
                                 defaultButton(
                                     radius: 6,
                                     text: 'Register',
@@ -152,10 +152,9 @@ class SocialRegisterScreen extends StatelessWidget {
                                         );
                                       }
                                     }),
-                            fallback:(BuildContext context) =>
-                            const Center(child: CircularProgressIndicator()),
-                        ),
-
+                            fallback:  (BuildContext context) =>
+                                  const Center(child: CircularProgressIndicator()),
+                        )
 
 
                       ],

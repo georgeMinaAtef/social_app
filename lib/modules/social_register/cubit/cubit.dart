@@ -3,8 +3,7 @@ import 'package:e_comerce_app_project/modules/social_register/cubit/states.dart'
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../model/social_user_model.dart';
+import '../../../models/social_app/social_user_model.dart';
 import '../../../shared/styles/icon_broken.dart';
 
 class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
@@ -40,7 +39,7 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
     required String name,
     required String uId,
   }) {
-    late SocialUserModel model = SocialUserModel(
+    SocialUserModel? model = SocialUserModel(
       phone: phone,
       name: name,
       email: email,

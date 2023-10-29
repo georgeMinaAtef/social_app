@@ -1,32 +1,32 @@
 
 import 'dart:io';
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:e_comerce_app_project/modules/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+
 import '../../shared/components/components.dart';
 import '../../shared/styles/icon_broken.dart';
 import '../cubit/cubit.dart';
+import '../cubit/states.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var userModel = SocialCubit.get(context).userModel;
     return BlocConsumer<SocialCubit, SocialStates>(
       listener: (context, state) {},
       builder: (context, state) {
-
         var cubit=SocialCubit.get(context);
-        var color= cubit.isDark?  Colors.white:Colors.black;
-
+        var color=cubit.isDark?Colors.white:Colors.black;
+        var userModel = SocialCubit.get(context).userModel;
         File? profileImage = SocialCubit.get(context).profileImage;
         File? coverImage = SocialCubit.get(context).coverImage;
         ImageProvider backG;
         ImageProvider backGCover;
-        if (profileImage == null)
-        {
+        if (profileImage == null) {
           backG = NetworkImage('${userModel!.image}');
         } else {
           backG = FileImage(profileImage);
@@ -62,7 +62,7 @@ class EditProfileScreen extends StatelessWidget {
                       height: 14,
                     ),
                   SizedBox(
-                    height: 240,
+                    height: 190,
                     child: Stack(
                       alignment: AlignmentDirectional.bottomCenter,
                       children: [
@@ -72,7 +72,7 @@ class EditProfileScreen extends StatelessWidget {
                             alignment: AlignmentDirectional.topEnd,
                             children: [
                               Container(
-                                height: 200.0,
+                                height: 140.0,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   borderRadius: const BorderRadius.only(
@@ -81,7 +81,7 @@ class EditProfileScreen extends StatelessWidget {
                                   ),
                                   image: DecorationImage(
                                     image: backGCover,
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
@@ -109,7 +109,7 @@ class EditProfileScreen extends StatelessWidget {
                             CircleAvatar(
                               radius: 63,
                               backgroundColor:
-                              Theme.of(context).scaffoldBackgroundColor,
+                                  Theme.of(context).scaffoldBackgroundColor,
                               child: CircleAvatar(
                                 radius: 60.0,
                                 backgroundImage: backG,
@@ -219,13 +219,13 @@ class EditProfileScreen extends StatelessWidget {
                           builder: (BuildContext context) =>
                           const CircularProgressIndicator(),
                           fallback: (BuildContext context) => TextButton(
-                            onPressed: () {
-                              SocialCubit.get(context)
-                                  .updateUserName(name: nameController.text);
+                          onPressed: () {
+                            SocialCubit.get(context)
+                                .updateUserName(name: nameController.text);
                             },
                             child: const Text('Edit Name '),
-                          ),
-                      ),
+                            ),
+                            ),
 
 
                     ],
@@ -256,13 +256,13 @@ class EditProfileScreen extends StatelessWidget {
                       ConditionalBuilder(
                           condition:  state is SocialUpdateUserBioLoadingState,
                           builder: (BuildContext context) =>
-                          const CircularProgressIndicator(),
+                           const CircularProgressIndicator(),
                           fallback: (BuildContext context) => TextButton(
-                              onPressed: () {
-                                SocialCubit.get(context)
-                                    .updateUserBio(bio: bioController.text);
-                              },
-                              child: const Text('Edit Bio      ')),
+                          onPressed: () {
+                            SocialCubit.get(context)
+                                .updateUserBio(bio: bioController.text);
+                            },
+                            child: const Text('Edit Bio      ')),
                       ),
 
                     ],
@@ -291,16 +291,16 @@ class EditProfileScreen extends StatelessWidget {
                         width: 5,
                       ),
                       ConditionalBuilder(
-                          condition: state is SocialUpdateUserPhoneLoadingState,
+                          condition:  state is SocialUpdateUserPhoneLoadingState,
                           builder: (BuildContext context) =>
                           const CircularProgressIndicator(),
-                          fallback:  (BuildContext context) => TextButton(
+                          fallback: (BuildContext context) => TextButton(
                               onPressed: () {
                                 SocialCubit.get(context)
                                     .updateUserPhone(phone: phoneController.text);
                               },
                               child: const Text('Edit Phone')),
-                      ),
+                      )
 
 
                     ],

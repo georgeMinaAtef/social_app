@@ -7,7 +7,7 @@ import 'colors.dart';
 ThemeData lightTheme = ThemeData(
   fontFamily: 'Janna',
   textTheme: const TextTheme(
-    bodyMedium: TextStyle(
+    bodyText1: TextStyle(
       color: Colors.black,
     ),
   ),
@@ -73,7 +73,7 @@ ThemeData darkTheme = ThemeData(
   ),
   scaffoldBackgroundColor: HexColor('333739'),
   textTheme: const TextTheme(
-    bodyMedium: TextStyle(
+    bodyText1: TextStyle(
       color: Colors.white,
     ),
   ),

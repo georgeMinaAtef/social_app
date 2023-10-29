@@ -1,13 +1,14 @@
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:e_comerce_app_project/modules/edit_password/edit_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../layout/layout.dart';
+
+import '../../layout/social_layout.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/constants.dart';
 import '../../shared/networks/local/cache_helper.dart';
 import '../../shared/styles/icon_broken.dart';
-import '../../layout/cubit/cubit.dart';
+import '../cubit/cubit.dart';
 import '../social_register/social_register_screen.dart';
 import 'cubit/cubit.dart';
 import 'cubit/state.dart';
@@ -31,8 +32,8 @@ class SocialLoginScreen extends StatelessWidget {
           if (state is SocialLoginSuccessState) {
             CacheHelper.saveData(key: 'uId', value: state.uId).then((value) {
               uId = state.uId;
-              navigateAndFinish(context, const Layout());
-              AppCubit.get(context).getUserData();
+              navigateAndFinish(context, const SocialLayout());
+              SocialCubit.get(context).getUserData();
             });
           }
         },
@@ -43,12 +44,11 @@ class SocialLoginScreen extends StatelessWidget {
               child: Column(
                 children:  [
                   SizedBox(
-                    width: 300,
-                    height: 300,
-                    child: Image.network(
-                      'https://i.ibb.co/TP1zcPq/2-03.png',
-                      fit:BoxFit.fill,
+                    child: Image.asset(
+                      'assets/images/login.png',
+                      fit:BoxFit.cover,
                     ),
+                    width: double.infinity,
                   ),
                   Form(
                     key: formKey,
@@ -61,7 +61,7 @@ class SocialLoginScreen extends StatelessWidget {
                               height: 15,
                             ),
                             designedFormField(
-                              fontColor: AppCubit.get(context).isDark?Colors.white:Colors.black,
+                              fontColor: SocialCubit.get(context).isDark?Colors.white:Colors.black,
                               controller: emailController,
                               type: TextInputType.emailAddress,
                               label: "Email address",
@@ -80,7 +80,7 @@ class SocialLoginScreen extends StatelessWidget {
                             ),
 
                             designedFormField(
-                              fontColor:AppCubit.get(context).isDark?Colors.white:Colors.black,
+                              fontColor:SocialCubit.get(context).isDark?Colors.white:Colors.black,
 
                               function: () {
                                 SocialLoginCubit.get(context)
@@ -116,15 +116,14 @@ class SocialLoginScreen extends StatelessWidget {
                                       radius: 6,
                                     ),
                                 fallback: (BuildContext context) =>
-                                const Center(child: CircularProgressIndicator()),
+                               const Center(child: CircularProgressIndicator()),
                             ),
+
 
                             const SizedBox(
                               height: 10,
                             ),
-                            TextButton(onPressed: ()
-                            {
-                              navigateTo(context, const EditPasswordScreen());
+                            TextButton(onPressed: (){
                             }, child: const Text(
                               'Forgotten Password?',
                               style: TextStyle(

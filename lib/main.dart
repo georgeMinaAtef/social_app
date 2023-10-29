@@ -1,50 +1,64 @@
-
-
-import 'package:e_comerce_app_project/modules/products/cart/cubit.dart';
-
-import '../../layout/cubit/cubit.dart';
-import '../../layout/cubit/states.dart';
-import 'package:e_comerce_app_project/shared/bloc_observer.dart';
 import 'package:e_comerce_app_project/shared/components/constants.dart';
 import 'package:e_comerce_app_project/shared/networks/local/cache_helper.dart';
 import 'package:e_comerce_app_project/shared/styles/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'modules/cubit/states.dart';
+import 'modules/social_login/social_login_screen.dart';
+import 'shared/bloc_observer.dart';
+import 'layout/social_layout.dart';
+import 'modules/cubit/cubit.dart';
 import 'modules/social_login/cubit/cubit.dart';
 import 'modules/social_register/cubit/cubit.dart';
-import 'modules/splash/cubit.dart';
-import 'modules/splash/splash.dart';
 
 
 // flutter build appbundle --build-name=1.2.0+1 --build-number=2
 
 void main() async{
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
-
-
   uId = CacheHelper.getData(key: 'uId');
+  Widget startWidget;
   bool? isDark = CacheHelper.getData(key: 'isDark');
+  bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
+
+
+  if (onBoarding == null)
+  {
+    if (uId != null)
+    {
+      startWidget = const SocialLayout();
+    }
+    else
+    {
+      startWidget = const SocialLoginScreen();
+    }
+  }
+  else
+  {
+    startWidget = const SocialLoginScreen();
+  }
+
   runApp( MyApp(
+    startWidget:startWidget,
     isDark:isDark,
   ));
-  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
   final bool? isDark;
-  const MyApp(
+  Widget startWidget;
+  MyApp(
       {
         Key? key,
         this.isDark,
+        required this.startWidget
       }
       ) : super(key: key);
 
@@ -53,22 +67,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AppCubit()..changeAppMode(fromShared: isDark)),
-        BlocProvider(create: (context) => CartCubit()),
+        BlocProvider(create: (context) => SocialCubit()..getUserData()..changeAppMode(fromShared: isDark)..getPosts()..getStory()),
         BlocProvider(create: (context) => SocialLoginCubit()),
         BlocProvider(create: (context) => SocialRegisterCubit()),
-        BlocProvider( create: (context) => SplashCubit()..loadData(), child: const SplashScreen(),),
       ],
-      child: BlocConsumer<AppCubit, AppStates>(
+      child: BlocConsumer<SocialCubit, SocialStates>(
         listener: (context, states) {},
         builder: (context, states) {
-          var cubit=AppCubit.get(context);
+          var cubit=SocialCubit.get(context);
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: cubit.isDark?ThemeMode.dark:ThemeMode.light,
-            home:  const SplashScreen(),
+            home:  startWidget,
           );
         },
       ),
@@ -76,5 +88,3 @@ class MyApp extends StatelessWidget {
 
   }
 }
-
-
